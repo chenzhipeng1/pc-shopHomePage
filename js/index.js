@@ -3,7 +3,13 @@ $(function() {
   $('.next').on('click', function() {
     $.fn.fullpage.moveSectionDown()
   })
+  // 所有动画控制阀
   let flag = 'finish1'
+  // 单独动画控制阀
+  flag2 = true
+  flag6 = true
+  flag7 = true
+  flag5 = true
   $('#fullpage').fullpage({
     navigation: true,
     afterLoad: function(a, index, c) {
@@ -28,7 +34,7 @@ $(function() {
           $('.star').attr({ style: '' })
           $('.starBox').attr({ style: '' })
         })
-        // 手跟随效果
+        // 开始购物按钮的hover效果
         $('.eighth .goBuy').hover(
           function() {
             $('.eighth .goBuy').attr(
@@ -62,10 +68,10 @@ $(function() {
             y = 247
           }
           var style =
-            'position: relative;left:' +
+            'position: absolute;left:' +
             (x - 100) +
             'px;top : ' +
-            (y - 120) +
+            (y + 30) +
             'px'
           // console.log(style);
           $('.eighth .hand').attr('style', style)
@@ -73,10 +79,11 @@ $(function() {
       }
     },
     onLeave: function(origin, destination, direction) {
-      // 1到2
-      if (origin === 1 && destination === 2 && flag === 'finish1') {
-        flag = false
+      // 到2动画
+      if (destination === 2 && flag2 === true) {
+        flag2 = false
         $('.next').animate({ opacity: 0 })
+        $('.next').hide()
         $('.searchBox')
           .show()
           .animate({ marginLeft: -113 }, 2000, function() {
@@ -96,6 +103,7 @@ $(function() {
                   .show()
                   .animate({ height: 218 }, 1000, function() {
                     flag = 'finish2'
+                    $('.next').show()
                     $('.next').animate({ opacity: 1 })
                   })
                 $('.second h3 .h3img1').animate({ opacity: 0 }, 1000)
@@ -104,25 +112,31 @@ $(function() {
             )
           })
       }
-      if (
-        origin === 2 &&
-        destination === 3 &&
-        direction === 'down' &&
-        flag === 'finish2'
-      ) {
+      if (origin === 2 && destination === 3 && flag === 'finish2') {
         // 2到3屏动画
-        flag = false
+        flag = 'finish3'
+        let h = $(window).height()
+        if (h <= 600) {
+          h = 599
+        }
+        $(window).resize(function() {
+          h = $(window).height()
+          if (h <= 600) {
+            h = 599
+          }
+          $('.second .moveSofa').css({ bottom: -(h - 258) })
+        })
         $('.next').animate({ opacity: 0 })
+        $('.next').hide()
 
         $('.second .mask').show()
-        flag = 'finish3'
         $('.second .moveSofa')
           .show()
           .animate(
             {
-              width: 166,
-              marginTop: 800,
-              marginLeft: -214
+              width: 215,
+              bottom: -(h - 258),
+              marginLeft: -238
             },
             1500,
             function() {
@@ -135,6 +149,7 @@ $(function() {
                     { opacity: 1 },
                     1000,
                     function() {
+                      $('.next').show()
                       $('.next').animate({ opacity: 1 })
                       $('.third .cartBox .img1').hide()
                     }
@@ -145,41 +160,59 @@ $(function() {
           )
       }
       // 3到4屏动画
-      if (origin === 3 && destination === 4 && flag === 'finish3') {
+      if (destination === 4 && flag === 'finish3') {
+        const h = $(window).height()
         flag = 'finish4'
         $('.next').animate({ opacity: 0 })
+        $('.next').hide()
         $('.second .moveSofa').css({ transform: 'rotate(16deg)' })
         $('.second .moveSofa').animate(
-          { marginTop: 1500, marginLeft: -60 },
+          { bottom: -(2 * h - 340), marginLeft: -105 },
           1900,
+          'linear',
           function() {
-            $('.fourth .moveSofa').show()
+            $('.fourth .fourth_sofa')
+              .show()
+              .animate(
+                { bottom: 270, marginLeft: -90 },
+                365,
+                'linear',
+                function() {
+                  $('.fourth .fourth_sofa').animate(
+                    { marginLeft: 1200 },
+                    4000,
+                    'easeInSine'
+                  )
+                  $('.fourth .bigCart').animate(
+                    { marginLeft: 1200 },
+                    3870,
+                    'easeInSine',
+                    function() {
+                      $('.fourth .addressee').animate({ opacity: 1 }, 400)
+                      $('.fourth .addressee .img2').animate(
+                        { opacity: 1 },
+                        400,
+                        function() {
+                          $('.next').show()
+                          $('.next').animate({ opacity: 1 })
+                          $('.fourth h3.h3_1').animate({ opacity: 0 }, 400)
+                          $('.fourth h3.h3_2').animate({ opacity: 1 }, 400)
+                        }
+                      )
+                    }
+                  )
+                }
+              )
             $('.second .moveSofa').hide()
-            $('.fourth .bigCart').animate(
-              { left: 1800 },
-              4000,
-              'easeInSine',
-              function() {
-                $('.fourth .addressee').animate({ opacity: 1 }, 400)
-                $('.fourth .addressee .img2').animate(
-                  { opacity: 1 },
-                  400,
-                  function() {
-                    $('.next').animate({ opacity: 1 })
-                  }
-                )
-                $('.fourth h3.h3_1').animate({ opacity: 0 }, 400)
-                $('.fourth h3.h3_2').animate({ opacity: 1 }, 400)
-              }
-            )
-            $('.fourth .moveSofa').animate({ left: 1800 }, 4000, 'easeInSine')
           }
         )
       }
-      // 4到5屏动画
-      if (origin === 4 && destination === 5 && flag === 'finish4') {
+      // 到5屏动画
+      if (destination === 5 && flag5 === true) {
+        flag5 = false
         flag = 'finish5'
         $('.next').animate({ opacity: 0 })
+        $('.next').hide()
         $('.fifth .hand').animate(
           {
             top: 402
@@ -188,22 +221,48 @@ $(function() {
           function() {
             $('.fifth .mouseClick').animate({ opacity: 1 }, function() {
               $('.fifth .mouse').hide()
-
-              $('.fifth .bigSofa').animate({ top: 475 }, 1000, function() {
-                $('.fifth .bill').animate({ top: 150 }, 1000, function() {
+              $('.fifth .bigSofa').animate({ top: 520 }, 1000, function() {
+                $('.fifth .bill').animate({ top: 200 }, 1000, function() {
                   $('.fifth .text ').animate({ opacity: 1 })
-                  flag = 'finish5'
+                  $('.next').show()
                   $('.next').animate({ opacity: 1 })
+                  $('.fifth .bigSofa').hide()
+                  $('.fifth .fifth_bigSofa').show()
                 })
               })
             })
           }
         )
       }
-      // 5到6屏动画
-      if (origin === 5 && destination === 6 && flag === 'finish5') {
+      // 到6屏动画
+      if (destination === 6 && flag6 === true) {
+        flag6 = false
         flag = 'finish6'
+        $('.fifth .bigSofa').hide()
+        $('.fifth .fifth_bigSofa').show()
+        let h = $(window).height()
+        if (h <= 600) {
+          h = 588
+        }
+        $(window).resize(function() {
+          h = $(window).height()
+          if (h <= 600) {
+            h = 588
+          }
+          $('.sixth .express').css({ top: h - 123 })
+        })
         $('.next').animate({ opacity: 0 })
+        $('.next').hide()
+        $('.fifth .fifth_bigSofa').animate(
+          { top: h + 230, width: 60 },
+          920,
+          'linear',
+          function() {
+            $('.fifth .fifth_bigSofa')
+              .hide()
+              .css({ opacity: 0 })
+          }
+        )
         $('.sixth .express').animate(
           {
             marginLeft: 190
@@ -212,7 +271,7 @@ $(function() {
           'linear',
           function() {
             $('.sixth .express').animate(
-              { top: 590 },
+              { top: h - 123 },
               1500,
               'linear',
               function() {
@@ -224,7 +283,7 @@ $(function() {
                   'easeInOutElastic'
                 )
                 $('.sixth').animate(
-                  { backgroundPositionX: -1050 },
+                  { backgroundPositionX: -960 },
                   3000,
                   function() {
                     $('.sixth .boy').animate(
@@ -247,6 +306,7 @@ $(function() {
                               1000,
                               function() {
                                 $('.sixth .boyText').animate({ opacity: 1 })
+                                $('.next').show()
                                 $('.next').animate({ opacity: 1 })
                               }
                             )
@@ -260,27 +320,21 @@ $(function() {
             )
           }
         )
-        $('.fifth .bigSofa').animate(
-          { top: 940, width: 60 },
-          920,
-          'linear',
-          function() {
-            $('.fifth .bigSofa').hide()
-          }
-        )
       }
-      // 6到7屏动画
-      if (origin === 6 && destination === 7 && flag === 'finish6') {
+      // 到7屏动画
+      if (destination === 7 && flag7 === true) {
+        flag7 = false
+        $('.next').animate({ opacity: 0 })
+        $('.next').hide()
         flag = false
 
-        $('.next').animate({ opacity: 0 })
-        setTimeout(() => {
-          $('.next').animate({ opacity: 0 })
-          $('.seventh .starBox').animate({ width: 120 }, function() {
+        $('.seventh .starBox').animate({ opacity: 1 }, 1500, function() {
+          $('.seventh .starBox').animate({ width: 120 }, 2000, function() {
             $('.seventh .text').animate({ opacity: 1 })
+            $('.next').show()
             $('.next').animate({ opacity: 1 })
           })
-        }, 1500)
+        })
       }
     }
   })
