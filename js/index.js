@@ -223,7 +223,7 @@ $(function() {
               $('.fifth .mouse').hide()
               $('.fifth .bigSofa').animate({ top: 520 }, 1000, function() {
                 $('.fifth .bill').animate({ top: 200 }, 1000, function() {
-                  $('.fifth .text ').animate({ opacity: 1 })
+                  $('.fifth .text ').addClass('move')
                   $('.next').show()
                   $('.next').animate({ opacity: 1 })
                   $('.fifth .bigSofa').hide()
