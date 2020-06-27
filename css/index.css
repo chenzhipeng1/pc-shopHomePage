@@ -302,6 +302,7 @@ width: 166px; */
 .fifth {
   background: url('../img/t1yisqfa4exxa3gmkg-2000-1500.png') no-repeat center
     bottom;
+  background-size:cover;
   z-index: 20;
   perspective: 400;
   -webkit-perspective: 400;
@@ -441,7 +442,7 @@ width: 166px; */
 }
 /* 第七块 */
 .seventh {
-  background: url('../img/t1wf1tfctaxxa3gmkg-2000-1500.png') no-repeat center
+  background: url('../img/t1wf1tfctaxxa3gmkg-2000-1500.png') repeat center
     bottom;
   z-index: 20;
 }
