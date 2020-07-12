@@ -7,11 +7,13 @@ $(function() {
   let flag = 'finish1'
   // 单独动画控制阀
   flag2 = true
+  flag4=true
   flag6 = true
   flag7 = true
   flag5 = true
   $('#fullpage').fullpage({
     navigation: true,
+    keyboardScrolling:false,
     afterLoad: function(a, index, c) {
       if (index === 1) {
         $('.next').show()
@@ -103,17 +105,17 @@ $(function() {
       if (origin === 2 && destination === 3 && flag === 'finish2') {
         // 2到3屏动画
         // flag = 'finish3'
-        let h = $(window).height()
-        if (h <= 600) {
-          h = 600
-        }
-        $(window).resize(function() {
-          h = $(window).height()
-          if (h <= 600) {
-            h = 600
-          }
-          $('.second .moveSofa').css({ bottom: -(h - 258) })
-        })
+        // let h = $(window).height()
+        // if (h <= 600) {
+        //   h = 600
+        // }
+        // $(window).resize(function() {
+        //   h = $(window).height()
+        //   if (h <= 600) {
+        //     h = 600
+        //   }
+        //   $('.second .moveSofa').css({ bottom: -(h - 258) })
+        // })
         $('.next').animate({ opacity: 0 })
         $('.next').hide()
         $('.second .mask').show()
@@ -122,8 +124,9 @@ $(function() {
           .animate(
             {
               width: 215,
-              bottom: -(h - 258),
-              marginLeft: -238
+              bottom: '-50%',
+              marginLeft: -238,
+              marginBottom:-50
             },
             1500,
             function() {
@@ -148,13 +151,14 @@ $(function() {
           )
       }
       // 3到4屏动画
-      if (destination === 4 && flag === 'finish3') {
+      if (destination === 4 && flag === 'finish3' && flag4) {
+        flag4=false
         const h = $(window).height()
         $('.next').animate({ opacity: 0 })
         $('.next').hide()
         $('.second .moveSofa').css({ transform: 'rotate(16deg)' })
         $('.second .moveSofa').animate(
-          { bottom: -(2 * h - 335), marginLeft: -105 },
+          { bottom: -(2 * h - 390), marginLeft: -105 },
           1900,
           'linear',
           function() {
@@ -166,12 +170,12 @@ $(function() {
                 'linear',
                 function() {
                   $('.fourth .fourth_sofa').animate(
-                    { marginLeft: 1200 },
+                    { marginLeft: 1400 },
                     4000,
                     'easeInSine'
                   )
                   $('.fourth .bigCart').animate(
-                    { marginLeft: 1200 },
+                    { marginLeft: 1400 },
                     3870,
                     'easeInSine',
                     function() {
@@ -197,7 +201,7 @@ $(function() {
         )
       }
       // 到5屏动画
-      if (destination === 5 && flag5 === true) {
+      if (destination === 5 && flag5 === true && flag==='finish4') {
         flag5 = false
         // flag = 'finish5'
         $('.next').animate({ opacity: 0 })
@@ -225,21 +229,21 @@ $(function() {
         )
       }
       // 到6屏动画
-      if (destination === 6 && flag6 === true) {
+      if (destination === 6 && flag6 === true && flag==='finish5') {
         flag6 = false
-        // $('.fifth .bigSofa').hide()
-        // $('.fifth .fifth_bigSofa').show()
+        $('.fifth .bigSofa').hide()
+        $('.fifth .fifth_bigSofa').show()
         let h = $(window).height()
-        if (h <= 600) {
-          h = 588
-        }
-        $(window).resize(function() {
-          h = $(window).height()
-          if (h <= 600) {
-            h = 588
-          }
-          $('.sixth .express').css({ top: h - 123 })
-        })
+        // if (h <= 600) {
+        //   h = 588
+        // }
+        // $(window).resize(function() {
+        //   h = $(window).height()
+        //   if (h <= 600) {
+        //     h = 588
+        //   }
+        //   $('.sixth .express').css({ top: h - 123 })
+        // })
         $('.next').animate({ opacity: 0 })
         $('.next').hide()
         $('.fifth .fifth_bigSofa').animate(
@@ -264,6 +268,7 @@ $(function() {
               1500,
               'linear',
               function() {
+                $('.sixth .express').hide()
                 $('.sixth .addressee').animate({ opacity: 1 })
                 $('.sixth .text').show()
                 $('.sixth .text').animate(
@@ -312,7 +317,7 @@ $(function() {
         )
       }
       // 到7屏动画
-      if (destination === 7 && flag7 === true) {
+      if (destination === 7 && flag7 === true &&flag === 'finish6') {
         flag7 = false
         $('.next').animate({ opacity: 0 })
         $('.next').hide()
